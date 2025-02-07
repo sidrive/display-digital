@@ -5,17 +5,17 @@
  */
 
 // Plugins
-import { registerPlugins } from "@/plugins";
-import VideoBackground from "vue-responsive-video-background-player";
+import { registerPlugins } from '@/plugins'
+import VideoBackground from 'vue-responsive-video-background-player'
 
 // Components
-import App from "./App.vue";
+import App from './App.vue'
 
 // Composables
-import { createApp } from "vue";
+import { createApp } from 'vue'
 
-const app = createApp(App).component("video-background", VideoBackground);
+const app = createApp(App).component('video-background', VideoBackground)
 
-registerPlugins(app);
+registerPlugins(app)
 
-app.mount("#app");
+app.mount('#app')

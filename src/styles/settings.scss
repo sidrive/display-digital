@@ -13,7 +13,7 @@ p {
   padding: 0;
 }
 #clock {
-  font-family: "Share Tech Mono", monospace;
+  font-family: 'Share Tech Mono', monospace;
   color: #ffffff;
   text-align: center;
   position: absolute;
@@ -41,123 +41,141 @@ p {
 }
 
 // ... existing code ...
-@font-face {
- font-family: 'Titillium Web';
- src: url('../assets/fonts/Titillium-Web-ExtraLight.ttf.woff') format('woff'),
-      url('../assets/fonts/Titillium-Web-ExtraLight.ttf.svg#Titillium-Web-ExtraLight') format('svg'),
-      url('../assets/fonts/Titillium-Web-ExtraLight.ttf.eot'),
-      url('../assets/fonts/Titillium-Web-ExtraLight.eot?#iefix') format('embedded-opentype'); 
- font-weight: normal;
- font-style: normal;
-}
+// @font-face {
+//  font-family: 'Titillium Web';
+//  src: url('../assets/fonts/Titillium-Web-ExtraLight.ttf.woff') format('woff'),
+//       url('../assets/fonts/Titillium-Web-ExtraLight.ttf.svg#Titillium-Web-ExtraLight') format('svg'),
+//       url('../assets/fonts/Titillium-Web-ExtraLight.ttf.eot'),
+//       url('../assets/fonts/Titillium-Web-ExtraLight.eot?#iefix') format('embedded-opentype');
+//  font-weight: normal;
+//  font-style: normal;
+// }
 
+// @font-face {
+//   font-family: 'Titillium Web';
+//   src: url('../assets/fonts/TitilliumWeb-ExtraLight.ttf') format('truetype');
+//   font-weight: normal;
+//   font-style: normal;
+// }
+
+@font-face {
+  font-family: 'Lato';
+  src: url('../assets/fonts/Lato-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
 // ... existing code ...
 @font-face {
- font-family: 'OpenSansCondLight';
- src: url('../assets/fonts/OpenSansCondLight/OpenSansCondLight.eot');
- src: local('OpenSansCondLight'), url('../assets/fonts/OpenSansCondLight/OpenSansCondLight.woff') format('woff'), url('../assets/fonts/OpenSansCondLight/OpenSansCondLight.ttf') format('truetype');
+  font-family: 'OpenSansCondLight';
+  src: url('../assets/fonts/OpenSansCondLight/OpenSansCondLight.eot');
+  src:
+    local('OpenSansCondLight'),
+    url('../assets/fonts/OpenSansCondLight/OpenSansCondLight.woff') format('woff'),
+    url('../assets/fonts/OpenSansCondLight/OpenSansCondLight.ttf') format('truetype');
 }
 
 // ... existing code ...
 @font-face {
- font-family: "Arial";
- src: url("../assets/fonts/Arial/Arial.eot"); /* IE9*/
- src: url("../assets/fonts/Arial/Arial.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
-      url("../assets/fonts/Arial/Arial.woff2") format("woff2"), /* chrome、firefox */
-      url("../assets/fonts/Arial/Arial.woff") format("woff"), /* chrome、firefox */
-      url("../assets/fonts/Arial/Arial.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-      url("../assets/fonts/Arial/Arial.svg#Arial") format("svg"); /* iOS 4.1- */
+  font-family: 'Arial';
+  src: url('../assets/fonts/Arial/Arial.eot'); /* IE9*/
+  src:
+    url('../assets/fonts/Arial/Arial.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */ url('../assets/fonts/Arial/Arial.woff2') format('woff2'),
+    /* chrome、firefox */ url('../assets/fonts/Arial/Arial.woff') format('woff'),
+    /* chrome、firefox */ url('../assets/fonts/Arial/Arial.ttf') format('truetype'),
+    /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+      url('../assets/fonts/Arial/Arial.svg#Arial') format('svg'); /* iOS 4.1- */
 }
 
 // ... existing code ...
 
 * {
- box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
- padding: 0;
- margin: 0;
- font-family: 'Titillium Web', Helvetica, Arial, sans-serif;  
+  padding: 0;
+  margin: 0;
+  font-family: Lato, Helvetica, Arial, sans-serif;
 }
 
 // ... existing code ...
 
 #full-screen-clock {
- position: fixed;
- bottom: 0;
- left: 0;
- right: 0;
- font-size: 4vw;
- color: #FFF;
- padding: 1vw 5vw;
- background: rgba(0, 0, 0, 0.3);
- text-align: right;
- opacity: 0.5;
- z-index: 100;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: 4vw;
+  color: #fff;
+  padding: 1vw 5vw;
+  background: rgba(0, 0, 0, 0.3);
+  text-align: right;
+  opacity: 0.5;
+  z-index: 100;
 }
 
 // ... existing code ...
 
 .full-screen {
- position: fixed;
- top: 0;
- left: 0;
- right: 0;
- bottom: 0;
- background-color: #122;
- // background-image: url(../img/bg-kubah.png);
- background-size: cover;
- background-position: center top;
- background-repeat: no-repeat;
- z-index: 99;
- color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #122;
+  // background-image: url(../img/bg-kubah.png);
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  z-index: 99;
+  color: #fff;
 }
 
 // ... existing code ...
 
 #display-adzan > div {
- position: absolute;
- top: 50%;
- left: 50%;
- transform: translate(-50%, -50%);
- color: #788;
- text-shadow: 0.3vw 0.3vw 0 rgba(0, 0, 0, .3);
- padding: 10vw;
- width: 100%;
- padding: 0 3vw;
- font-size: 10vw;
- text-align: center;
- text-transform: uppercase;
- font-family: 'OpenSansCondLight', Helvetica, Arial, sans-serif; 
- // font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #788;
+  text-shadow: 0.3vw 0.3vw 0 rgba(0, 0, 0, 0.3);
+  padding: 10vw;
+  width: 100%;
+  padding: 0 3vw;
+  font-size: 10vw;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: 'OpenSansCondLight', Helvetica, Arial, sans-serif;
+  // font-weight: bold;
 }
 
 // ... existing code ...
 
 #count-down .counter {
- color: #fff;
- position: absolute;
- top: 50%;
- left: 50%;
- transform: translate(-50%, -50%);
- color: #788;
- width: 100%;
- padding: 0 3vw;
- text-align: center;
- text-transform: uppercase;
- font-family: 'OpenSansCondLight', Helvetica, Arial, sans-serif;  
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #788;
+  width: 100%;
+  padding: 0 3vw;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: 'OpenSansCondLight', Helvetica, Arial, sans-serif;
 }
 
 // ... existing code ...
 
 #right-counter {
- position: fixed;
- top: 0;
- right: 0;
- bottom: 0;
- left: 26vw;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 26vw;
 }
 
 // ... existing code ...
