@@ -1,6 +1,6 @@
 <template>
   <div>
-    <video-background src="../../public/campfire.mp4" style="max-height: 100%; height: 100vh">
+    <video-background :src="bgVideo" style="max-height: 100%; height: 100vh">
       <div id="clock">
         <div id="jam">
           {{ time }}
@@ -28,6 +28,7 @@
 </template>
 <script>
 import { listShalat, searchCity } from '@/api/jadwalsholat'
+import moment from 'moment'
 export default {
   data() {
     return {
@@ -39,20 +40,13 @@ export default {
       dateNow: null,
       dataShalat: {},
       nextPrayerTime: {},
+      bgVideo: '',
     }
   },
 
   watch: {
     time: function (newTime, oldTime) {
-      // const timeString = '11:56'
-      // Membuat objek Date dengan menambahkan tanggal saat ini
-      // const currentTime = new Date()
-      // const [hours, minutes] = timeString.split(':')
-
-      // // Mengatur jam dan menit
-      // currentTime.setHours(parseInt(hours, 10))
-      // currentTime.setMinutes(parseInt(minutes, 10))
-      // currentTime.setSeconds(0)
+      this.generateBackground(newTime)
       if (newTime === String(this.nextPrayerTime.value)) {
         // console.log('real', timeString)
         // console.log('real', this.nextPrayerTime.value)
@@ -172,6 +166,17 @@ export default {
         }
       })
       console.log('time', currentTime)
+    },
+
+    generateBackground(newTime) {
+      if (newTime >= '16:00' && newTime <= '18:00') {
+        console.log("It's between 16:00 and 18:00 bro")
+        this.bgVideo = '../../public/campfire-sore.mp4'
+      } else if (newTime >= '06:00' && newTime <= '15:59') {
+        this.bgVideo = '../../public/landscape-siang.mp4'
+      } else {
+        this.bgVideo = '../../public/campfire.mp4'
+      }
     },
   },
 }
