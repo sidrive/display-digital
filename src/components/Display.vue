@@ -4,7 +4,7 @@
       <div id="clock">
         <div id="jam">
           {{ time }}
-          <div style="right: -10px">{{ second }}</div>
+          <div style="right: -1vw">{{ second }}</div>
         </div>
         <p class="date">{{ date }}</p>
         <!-- <p class="text">Zakanet</p> -->
