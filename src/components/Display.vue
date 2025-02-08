@@ -1,10 +1,10 @@
 <template>
   <div>
-    <video-background :src="bgVideo" style="max-height: 100%; height: 100vh">
+    <video-background v-if="showJadwal" :src="bgVideo" style="max-height: 100%; height: 100vh">
       <div id="clock">
         <div id="jam">
           {{ time }}
-          <div style="right: -1vw">{{ second }}</div>
+          <div style="right: -4vw">{{ second }}</div>
         </div>
         <p class="date">{{ date }}</p>
         <!-- <p class="text">Zakanet</p> -->
@@ -23,7 +23,41 @@
           </div>
         </div>
       </div>
+
+      <!-- <div id="clock">
+        
+      </div> -->
     </video-background>
+    <div v-if="showCounter" id="count-down" class="full-screen">
+      <video-background src="../../public/bg-masjid.mp4" style="max-height: 100%; height: 100vh">
+        <div class="counter">
+          <vue-countdown
+            v-if="!showIqomah"
+            ref="waitadzan"
+            :time="5 * 60 * 1000"
+            v-slot="{ minutes, seconds }"
+            @end="endCountdown"
+          >
+            <div id="jam">{{ minutes }}:{{ seconds }}</div>
+            <div v-if="nextPrayerTime.id">
+              Menuju waktu Adzan {{ nextPrayerTime.id.toUpperCase() }}
+            </div>
+          </vue-countdown>
+          <vue-countdown
+            v-if="showIqomah"
+            ref="waitiqomah"
+            :time="10 * 60 * 1000"
+            v-slot="{ minutes, seconds }"
+            @end="endCountIqomah"
+          >
+            <div id="jam">{{ minutes }}:{{ seconds }}</div>
+            <div v-if="nextPrayerTime.id">
+              Menuju waktu iqomah {{ nextPrayerTime.id.toUpperCase() }}
+            </div>
+          </vue-countdown>
+        </div>
+      </video-background>
+    </div>
   </div>
 </template>
 <script>
@@ -41,6 +75,9 @@ export default {
       dataShalat: {},
       nextPrayerTime: {},
       bgVideo: '',
+      showJadwal: true,
+      showCounter: false,
+      showIqomah: false,
     }
   },
 
@@ -58,6 +95,17 @@ export default {
         this.getListShalat()
       }
 
+      if (
+        newTime === String(this.nextPrayerTime.waitAdzan) &&
+        !['Imsak', 'Terbit'].includes(this.nextPrayerTime.id)
+      ) {
+        console.log('adzan')
+        this.showCounter = true
+        this.showJadwal = false
+        this.checkActiveShalat()
+        setTimeout(() => this.$refs.waitadzan.restart(), 5000)
+      }
+      // this.$refs.waitadzan.restart()
       // if (this.nextPrayerTime && this.nextPrayerTime.time) {
       //   if (currentTime === this.nextPrayerTime.time) {
       //     console.log(`It's time for ${this.nextPrayerTime.name} prayer!`)
@@ -131,7 +179,12 @@ export default {
             date.setHours(parseInt(hours, 10))
             date.setMinutes(parseInt(minutes, 10))
             date.setSeconds(0)
+
+            const waitAdzan = moment(i.value, 'HH:mm').subtract(5, 'm')
+            const iqomah = moment(i.value, 'HH:mm').add(10, 'm')
             i.time = date
+            i.waitAdzan = waitAdzan.format('HH:mm')
+            i.iqomah = iqomah.format('HH:mm')
           })
           this.checkActiveShalat()
         })
@@ -157,12 +210,16 @@ export default {
 
       this.dataShalat.forEach((shalat, index) => {
         if (shalat.time < currentTime) {
-          console.log('timeA', shalat.time)
-          console.log('timeB', currentTime)
+          console.log('timeA', this.dataShalat.length)
           this.dataShalat.forEach((s) => (s.active = false))
           // shalat.active = true
-          this.dataShalat[index + 1].active = true
-          this.nextPrayerTime = this.dataShalat[index + 1]
+          if (index === this.dataShalat.length - 1) {
+            this.dataShalat[0].active = true
+            this.nextPrayerTime = this.dataShalat[0]
+          } else {
+            this.dataShalat[index + 1].active = true
+            this.nextPrayerTime = this.dataShalat[index + 1]
+          }
         }
       })
       console.log('time', currentTime)
@@ -177,6 +234,18 @@ export default {
       } else {
         this.bgVideo = '../../public/campfire.mp4'
       }
+    },
+
+    endCountdown() {
+      this.showIqomah = true
+      this.checkActiveShalat()
+      setTimeout(() => this.$refs.waitiqomah.restart(), 5000)
+    },
+    endCountIqomah() {
+      this.showIqomah = false
+      this.showCounter = false
+      this.showJadwal = true
+      this.checkActiveShalat()
     },
   },
 }
