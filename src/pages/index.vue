@@ -1,5 +1,6 @@
 <template>
-  <HelloWorld />
+  <!-- <HelloWorld /> -->
+  <div>aaa</div>
 </template>
 
 <script setup>

@@ -10,15 +10,21 @@ import { createRouter, createWebHistory } from 'vue-router/auto'
 
 const routes = [
   {
+    path: '/',
+    redirect: 'display',
+    name: 'Display Masjid',
+    component: () => import('@/components/Display.vue'),
+  },
+  {
     path: '/display',
     name: 'Display',
     component: () => import('@/components/Display.vue'),
   },
-  {
-    path: '/masjid',
-    name: 'Masjid',
-    component: () => import('@/components/MasjidDisplay.vue'),
-  },
+  // {
+  //   path: '/masjid',
+  //   name: 'Masjid',
+  //   component: () => import('@/components/MasjidDisplay.vue'),
+  // },
 ]
 
 const router = createRouter({
