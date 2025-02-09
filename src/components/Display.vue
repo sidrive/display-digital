@@ -3,8 +3,8 @@
     <video-background v-if="showJadwal" :src="bgVideo" style="max-height: 100%; height: 100vh">
       <div id="clock">
         <div id="jam">
-          {{ time }}
-          <div style="right: -4vw">{{ second }}</div>
+          <span class="clsjam">{{ time }}</span>
+          <div class="jam">{{ second }}</div>
         </div>
         <p class="date">{{ date }}</p>
         <!-- <p class="text">Zakanet</p> -->
@@ -84,11 +84,14 @@ export default {
   watch: {
     time: function (newTime, oldTime) {
       this.generateBackground(newTime)
-      if (newTime === String(this.nextPrayerTime.value)) {
+      if (
+        newTime === String(this.nextPrayerTime.value) &&
+        ['Imsak', 'Terbit'].includes(this.nextPrayerTime.id)
+      ) {
         // console.log('real', timeString)
         // console.log('real', this.nextPrayerTime.value)
         this.checkActiveShalat()
-        console.log(`It's time for ${this.nextPrayerTime.id} prayer!`)
+        // console.log(`It's time for ${this.nextPrayerTime.id} prayer!`)
       }
 
       if (newTime === '00:00') {
@@ -238,7 +241,7 @@ export default {
 
     endCountdown() {
       this.showIqomah = true
-      this.checkActiveShalat()
+      // this.checkActiveShalat()
       setTimeout(() => this.$refs.waitiqomah.restart(), 5000)
     },
     endCountIqomah() {

@@ -32,7 +32,7 @@ p {
   }
   .date {
     letter-spacing: 0.1em;
-    font-size: 24px;
+    font-size: 2vw;
   }
   .text {
     letter-spacing: 0.1em;
@@ -206,18 +206,32 @@ body {
   color: #fff;
   position: relative;
 }
+
+@media screen and (max-width: 1024px) {
+  .jam {
+    right: -0.2vw !important;
+  }
+  .clsjam {
+    margin-right: 3vw;
+  }
+}
+
 #jam div {
+  // @media (max-width: 1024px) {
+  //   right: -0.1vw;
+  // }
   position: absolute;
-  top: 0.2vw;
-  right: 3vw;
+  top: 0.1vw;
+  right: -1vw;
   /* background:#33cccc; */
   color: #33cccc;
   line-height: 0.8;
   width: 4vw;
-  font-size: 3vw;
+  font-size: 4vw;
   font-weight: bold;
   font-family: 'Titillium Web', Helvetica, Arial, sans-serif;
   border-left: 0.7px solid rgba(255, 255, 255, 0.6);
+  z-index: 100;
   /* padding-left: 1.1vw; */
 }
 #tgl {
