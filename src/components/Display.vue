@@ -32,25 +32,45 @@
       <video-background src="../../public/bg-masjid.mp4" style="max-height: 100%; height: 100vh">
         <div class="counter">
           <vue-countdown
-            v-if="!showIqomah"
+            v-if="beforeAdzan"
             ref="waitadzan"
             :time="5 * 60 * 1000"
             v-slot="{ minutes, seconds }"
             @end="endCountdown"
           >
-            <div id="jam">{{ minutes }}:{{ seconds }}</div>
+            <div id="jam" style="text-transform: capitalize">
+              {{ minutes }} <span class="count">menit</span> {{ seconds }}
+              <span class="count">detik</span>
+            </div>
             <div v-if="nextPrayerTime.id">
               Menuju waktu Adzan {{ nextPrayerTime.id.toUpperCase() }}
             </div>
           </vue-countdown>
           <vue-countdown
+            v-if="showAdzan"
+            ref="showadzan"
+            :time="5 * 60 * 1000"
+            v-slot="{ minutes, seconds }"
+            @end="endCountAdzan"
+          >
+            <div id="jam" style="text-transform: capitalize">
+              Waktu Adzan {{ nextPrayerTime.id.toUpperCase() }}
+            </div>
+            <div style="text-transform: capitalize">
+              {{ minutes }} <span>menit</span> {{ seconds }} detik
+            </div>
+          </vue-countdown>
+          <vue-countdown
             v-if="showIqomah"
             ref="waitiqomah"
-            :time="10 * 60 * 1000"
+            :time="5 * 60 * 1000"
             v-slot="{ minutes, seconds }"
             @end="endCountIqomah"
           >
-            <div id="jam">{{ minutes }}:{{ seconds }}</div>
+            <div id="jam" style="text-transform: capitalize">
+              {{ minutes }} <span class="count">menit</span> {{ seconds }}
+              <span class="count">detik</span>
+            </div>
             <div v-if="nextPrayerTime.id">
               Menuju waktu iqomah {{ nextPrayerTime.id.toUpperCase() }}
             </div>
@@ -78,6 +98,8 @@ export default {
       showJadwal: true,
       showCounter: false,
       showIqomah: false,
+      beforeAdzan: false,
+      showAdzan: false,
     }
   },
 
@@ -105,9 +127,19 @@ export default {
         console.log('adzan')
         this.showCounter = true
         this.showJadwal = false
+        this.beforeAdzan = true
         this.checkActiveShalat()
         setTimeout(() => this.$refs.waitadzan.restart(), 5000)
       }
+
+      // if ('23:25' === newTime) {
+      //   console.log('adzan')
+      //   this.showCounter = true
+      //   this.showJadwal = false
+      //   this.beforeAdzan = true
+      //   this.checkActiveShalat()
+      //   setTimeout(() => this.$refs.waitadzan.restart(), 5000)
+      // }
       // this.$refs.waitadzan.restart()
       // if (this.nextPrayerTime && this.nextPrayerTime.time) {
       //   if (currentTime === this.nextPrayerTime.time) {
@@ -240,8 +272,14 @@ export default {
     },
 
     endCountdown() {
-      this.showIqomah = true
+      this.showAdzan = true
+      this.beforeAdzan = false
       // this.checkActiveShalat()
+      setTimeout(() => this.$refs.showadzan.restart(), 5000)
+    },
+    endCountAdzan() {
+      this.showAdzan = false
+      this.showIqomah = true
       setTimeout(() => this.$refs.waitiqomah.restart(), 5000)
     },
     endCountIqomah() {
