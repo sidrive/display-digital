@@ -106,11 +106,8 @@ export default {
   watch: {
     time: function (newTime, oldTime) {
       this.generateBackground(newTime)
-      if (
-        newTime === String(this.nextPrayerTime.value) &&
-        ['Imsak', 'Terbit'].includes(this.nextPrayerTime.id)
-      ) {
-        // console.log('real', timeString)
+      if (this.nextPrayerTime.id === undefined) {
+        // console.log('real')
         // console.log('real', this.nextPrayerTime.value)
         this.checkActiveShalat()
         // console.log(`It's time for ${this.nextPrayerTime.id} prayer!`)
@@ -232,13 +229,13 @@ export default {
     },
 
     checkActiveShalat() {
-      // const timeString = '02:10'
+      // const timeString = '04:15'
 
       // Membuat objek Date dengan menambahkan tanggal saat ini
       const currentTime = new Date()
       // const [hours, minutes] = timeString.split(':')
 
-      // // Mengatur jam dan menit
+      // Mengatur jam dan menit
       // currentTime.setHours(parseInt(hours, 10))
       // currentTime.setMinutes(parseInt(minutes, 10))
       // currentTime.setSeconds(0)
@@ -255,9 +252,11 @@ export default {
             this.dataShalat[index + 1].active = true
             this.nextPrayerTime = this.dataShalat[index + 1]
           }
+        } else {
+          // console.log('lll', currentTime)
         }
       })
-      console.log('time', currentTime)
+      // console.log('time', currentTime)
     },
 
     generateBackground(newTime) {
