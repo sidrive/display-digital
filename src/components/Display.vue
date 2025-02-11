@@ -106,15 +106,22 @@ export default {
   watch: {
     time: function (newTime, oldTime) {
       this.generateBackground(newTime)
+
+      if (newTime === '00:00') {
+        this.getListShalat()
+        setTimeout(() => this.checkActiveShalat(), 5000)
+      }
+
       if (this.nextPrayerTime.id === undefined) {
-        // console.log('real')
-        // console.log('real', this.nextPrayerTime.value)
         this.checkActiveShalat()
         // console.log(`It's time for ${this.nextPrayerTime.id} prayer!`)
       }
 
-      if (newTime === '00:00') {
-        this.getListShalat()
+      if (
+        newTime === String(this.nextPrayerTime.value) &&
+        ['Imsak', 'Terbit'].includes(this.nextPrayerTime.id)
+      ) {
+        this.checkActiveShalat()
       }
 
       if (
@@ -126,7 +133,7 @@ export default {
         this.showJadwal = false
         this.beforeAdzan = true
         this.checkActiveShalat()
-        setTimeout(() => this.$refs.waitadzan.restart(), 5000)
+        setTimeout(() => this.$refs.waitadzan.restart(), 2000)
       }
 
       // if ('23:25' === newTime) {
@@ -252,8 +259,6 @@ export default {
             this.dataShalat[index + 1].active = true
             this.nextPrayerTime = this.dataShalat[index + 1]
           }
-        } else {
-          // console.log('lll', currentTime)
         }
       })
       // console.log('time', currentTime)
@@ -274,12 +279,12 @@ export default {
       this.showAdzan = true
       this.beforeAdzan = false
       // this.checkActiveShalat()
-      setTimeout(() => this.$refs.showadzan.restart(), 5000)
+      setTimeout(() => this.$refs.showadzan.restart(), 2000)
     },
     endCountAdzan() {
       this.showAdzan = false
       this.showIqomah = true
-      setTimeout(() => this.$refs.waitiqomah.restart(), 5000)
+      setTimeout(() => this.$refs.waitiqomah.restart(), 2000)
     },
     endCountIqomah() {
       this.showIqomah = false
