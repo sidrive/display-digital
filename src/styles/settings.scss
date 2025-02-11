@@ -187,7 +187,7 @@ body {
   right: 0;
   bottom: 0;
   left: 0;
-  background-image: url(../../public/img/bg-pattern-01.png);
+  background-image: url(/img/bg-pattern-01.png);
   background-repeat: repeat;
   opacity: 0.6;
   max-width: 20vw;
@@ -257,7 +257,7 @@ body {
   bottom: -5.8vw;
   right: 3vw;
   /* background-color:#e2ad0055; */
-  background-image: url(../../public/img/clock-line.png);
+  background-image: url(/img/clock-line.png);
   background-size: contain;
   background-position: center center;
   background-repeat: no-repeat;
@@ -311,7 +311,7 @@ body {
   right: -1vw;
   /* background-color:#e2ad00; */
   border-radius: 5px;
-  background-image: url(../../public/img/pattern01.png);
+  background-image: url(/img/pattern01.png);
   background-size: contain;
   background-position: center center;
   background-repeat: no-repeat;
@@ -393,5 +393,5 @@ body {
   border-radius: 1vh;
 }
 #count-down {
-  background-image: url(../../public/img/bg-masjid.png);
+  background-image: url(/img/bg-masjid.png);
 }

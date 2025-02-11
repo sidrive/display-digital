@@ -267,11 +267,11 @@ export default {
     generateBackground(newTime) {
       if (newTime >= '16:00' && newTime <= '18:00') {
         console.log("It's between 16:00 and 18:00 bro")
-        this.bgVideo = '../../public/campfire-sore.mp4'
+        this.bgVideo = '/campfire-sore.mp4'
       } else if (newTime >= '06:00' && newTime <= '15:59') {
-        this.bgVideo = '../../public/landscape-siang.mp4'
+        this.bgVideo = 'public/landscape-siang.mp4'
       } else {
-        this.bgVideo = '../../public/campfire.mp4'
+        this.bgVideo = '/campfire.mp4'
       }
     },
 
