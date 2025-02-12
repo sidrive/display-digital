@@ -29,7 +29,7 @@
       </div> -->
     </video-background>
     <div v-if="showCounter" id="count-down" class="full-screen">
-      <video-background src="../../public/bg-masjid.mp4" style="max-height: 100%; height: 100vh">
+      <video-background src="/bg-masjid.mp4" style="max-height: 100%; height: 100vh">
         <div class="counter">
           <vue-countdown
             v-if="beforeAdzan"
@@ -248,6 +248,7 @@ export default {
       let closestShalat = null
       let closestShalatTime = null
       this.dataShalat.forEach((shalat, index) => {
+        shalat.active = false
         const shalatTime = moment(shalat.time, 'HH:mm')
         console.log('timeA', targetTime.isBefore(shalatTime))
         if (
