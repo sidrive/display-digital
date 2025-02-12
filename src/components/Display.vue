@@ -112,43 +112,48 @@ export default {
         setTimeout(() => this.checkActiveShalat(), 5000)
       }
 
-      if (this.nextPrayerTime.id === undefined) {
+      if (this.nextPrayerTime.id) {
+        if (['Imsak', 'Terbit'].includes(this.nextPrayerTime.id)) {
+          if (newTime === String(this.nextPrayerTime.value)) {
+            this.checkActiveShalat()
+          }
+        } else {
+          if (newTime === String(this.nextPrayerTime.waitAdzan)) {
+            console.log('adzan')
+            this.showCounter = true
+            this.showJadwal = false
+            this.beforeAdzan = true
+            this.checkActiveShalat()
+            setTimeout(() => this.$refs.waitadzan.restart(), 2000)
+          }
+        }
+      } else {
         this.checkActiveShalat()
-        // console.log(`It's time for ${this.nextPrayerTime.id} prayer!`)
+        console.log(`It's time for ${this.nextPrayerTime.id} prayer!`)
       }
 
-      if (
-        newTime === String(this.nextPrayerTime.value) &&
-        ['Imsak', 'Terbit'].includes(this.nextPrayerTime.id)
-      ) {
-        this.checkActiveShalat()
-      }
+      // if (this.nextPrayerTime.id === undefined) {
+      //   this.checkActiveShalat()
+      //   console.log(`It's time for ${this.nextPrayerTime.id} prayer!`)
+      // }
 
-      if (
-        newTime === String(this.nextPrayerTime.waitAdzan) &&
-        !['Imsak', 'Terbit'].includes(this.nextPrayerTime.id)
-      ) {
-        console.log('adzan')
-        this.showCounter = true
-        this.showJadwal = false
-        this.beforeAdzan = true
-        this.checkActiveShalat()
-        setTimeout(() => this.$refs.waitadzan.restart(), 2000)
-      }
+      // if (
+      //   newTime === String(this.nextPrayerTime.value) &&
+      //   ['Imsak', 'Terbit'].includes(this.nextPrayerTime.id)
+      // ) {
+      //   this.checkActiveShalat()
+      // }
 
-      // if ('23:25' === newTime) {
+      // if (
+      //   newTime === String(this.nextPrayerTime.waitAdzan) &&
+      //   !['Imsak', 'Terbit'].includes(this.nextPrayerTime.id)
+      // ) {
       //   console.log('adzan')
       //   this.showCounter = true
       //   this.showJadwal = false
       //   this.beforeAdzan = true
       //   this.checkActiveShalat()
-      //   setTimeout(() => this.$refs.waitadzan.restart(), 5000)
-      // }
-      // this.$refs.waitadzan.restart()
-      // if (this.nextPrayerTime && this.nextPrayerTime.time) {
-      //   if (currentTime === this.nextPrayerTime.time) {
-      //     console.log(`It's time for ${this.nextPrayerTime.name} prayer!`)
-      //   }
+      //   setTimeout(() => this.$refs.waitadzan.restart(), 2000)
       // }
     },
   },
@@ -225,7 +230,7 @@ export default {
             i.waitAdzan = waitAdzan.format('HH:mm')
             i.iqomah = iqomah.format('HH:mm')
           })
-          this.checkActiveShalat()
+          // this.checkActiveShalat()
         })
         .catch((error) => {
           if (error.response) {
@@ -236,31 +241,53 @@ export default {
     },
 
     checkActiveShalat() {
-      // const timeString = '04:15'
+      const currentTime = moment().format('HH:mm')
+      // const timeString = '21:30'
+      const targetTime = moment(currentTime, 'HH:mm')
 
-      // Membuat objek Date dengan menambahkan tanggal saat ini
-      const currentTime = new Date()
+      let closestShalat = null
+      let closestShalatTime = null
+      this.dataShalat.forEach((shalat, index) => {
+        const shalatTime = moment(shalat.time, 'HH:mm')
+        console.log('timeA', targetTime.isBefore(shalatTime))
+        if (
+          targetTime.isBefore(shalatTime) &&
+          (!closestShalatTime || shalatTime.diff(targetTime) < closestShalatTime.diff(targetTime))
+        ) {
+          closestShalat = shalat
+          closestShalatTime = shalatTime
+        }
+      })
+      if (closestShalat) {
+        closestShalat.active = true
+        this.nextPrayerTime = closestShalat
+      }
+
+      // const timeString = '00:15'
+
+      // // Membuat objek Date dengan menambahkan tanggal saat ini
+      // const currentTime = new Date()
       // const [hours, minutes] = timeString.split(':')
 
-      // Mengatur jam dan menit
+      // // Mengatur jam dan menit
       // currentTime.setHours(parseInt(hours, 10))
       // currentTime.setMinutes(parseInt(minutes, 10))
       // currentTime.setSeconds(0)
 
-      this.dataShalat.forEach((shalat, index) => {
-        if (shalat.time < currentTime) {
-          console.log('timeA', this.dataShalat.length)
-          this.dataShalat.forEach((s) => (s.active = false))
-          // shalat.active = true
-          if (index === this.dataShalat.length - 1) {
-            this.dataShalat[0].active = true
-            this.nextPrayerTime = this.dataShalat[0]
-          } else {
-            this.dataShalat[index + 1].active = true
-            this.nextPrayerTime = this.dataShalat[index + 1]
-          }
-        }
-      })
+      // this.dataShalat.forEach((shalat, index) => {
+      //   if (shalat.time < currentTime) {
+      //     console.log('timeA', this.dataShalat.length)
+      //     this.dataShalat.forEach((s) => (s.active = false))
+      //     // shalat.active = true
+      //     if (index === this.dataShalat.length - 1) {
+      //       this.dataShalat[0].active = true
+      //       this.nextPrayerTime = this.dataShalat[0]
+      //     } else {
+      //       this.dataShalat[index + 1].active = true
+      //       this.nextPrayerTime = this.dataShalat[index + 1]
+      //     }
+      //   }
+      // })
       // console.log('time', currentTime)
     },
 
