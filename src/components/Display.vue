@@ -296,7 +296,7 @@ export default {
         console.log("It's between 16:00 and 18:00 bro")
         this.bgVideo = '/campfire-sore.mp4'
       } else if (newTime >= '06:00' && newTime <= '15:59') {
-        this.bgVideo = 'public/landscape-siang.mp4'
+        this.bgVideo = '/landscape-siang.mp4'
       } else {
         this.bgVideo = '/campfire.mp4'
       }
