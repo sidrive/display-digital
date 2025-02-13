@@ -115,7 +115,7 @@ export default {
       if (this.nextPrayerTime.id) {
         if (['Imsak', 'Terbit'].includes(this.nextPrayerTime.id)) {
           if (newTime === String(this.nextPrayerTime.value)) {
-            this.checkActiveShalat()
+            setTimeout(() => this.checkActiveShalat(), 120000)
           }
         } else {
           if (newTime === String(this.nextPrayerTime.waitAdzan)) {
