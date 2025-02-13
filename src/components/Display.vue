@@ -293,6 +293,7 @@ export default {
     },
 
     generateBackground(newTime) {
+      this.checkActiveShalat()
       if (newTime >= '16:00' && newTime <= '18:00') {
         console.log("It's between 16:00 and 18:00 bro")
         this.bgVideo = '/campfire-sore.mp4'
